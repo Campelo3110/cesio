@@ -29,7 +29,7 @@ async function gerarPerguntaHandler(req, res, body) {
     const perguntasGeradas = [];
 
     for (let i = 0; i < numPerguntas; i++) {
-        const promptText = `Gere uma pergunta sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura (não é necessário especificar que o arquivo está em JSON):
+        const promptText = `Gere uma pergunta sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura:
         {
           "question": "Pergunta",
           "answers": [
@@ -42,13 +42,14 @@ async function gerarPerguntaHandler(req, res, body) {
         }`;
 
         try {
+            // O input precisa ser um array de strings
             const model = await genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
             const result = await model.generateContent({
-                prompt: promptText,
+                input: [promptText] // Corrigido para ser um array de strings
             });
 
             // Verifique se a resposta contém texto
-            const text = result?.message?.content || '';
+            const text = result?.content || '';
 
             // Certifique-se de que text é uma string antes de verificar seu conteúdo
             if (typeof text === 'string' && (text.startsWith('{') || text.startsWith('['))) {
