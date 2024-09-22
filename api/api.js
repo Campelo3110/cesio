@@ -28,7 +28,7 @@ async function gerarPerguntaHandler(req, res, body) {
     const perguntasGeradas = [];
 
     for (let i = 0; i < numPerguntas; i++) {
-        const promptText = `Gere uma pergunta sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura (não é necessário especificar que o arquivo está em JSON):
+        const promptText = `Gere uma pergunta sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura:
         {
           "question": "Pergunta",
           "answers": [
@@ -48,11 +48,12 @@ async function gerarPerguntaHandler(req, res, body) {
 
             const candidates = result?.response?.candidates;
             if (candidates && candidates.length > 0) {
-                const text = candidates[0]?.output || candidates[0]?.text || '';
+                // Acesse o conteúdo correto dentro da estrutura da resposta
+                const text = candidates[0]?.content?.parts[0]?.text || '';
 
                 if (typeof text === 'string' && text.trim()) {
                     try {
-                        const resultadoJSON = JSON.parse(text);
+                        const resultadoJSON = JSON.parse(text); // Agora o JSON correto está aqui
                         perguntasGeradas.push({
                             pergunta: resultadoJSON.question,
                             alternativas: resultadoJSON.answers,
@@ -80,8 +81,10 @@ async function gerarPerguntaHandler(req, res, body) {
         }
     }
 
+    // Enviar todas as perguntas geradas
     res.status(200).json(perguntasGeradas);
 }
+
 
 // Função principal de tratamento de requisições
 export default async function handler(req, res) {
