@@ -1,17 +1,15 @@
 {
-    "version": 2,
-    "name": "cesio",
-    "rewrites": [
-      { "source": "/api/(.*)", "destination": "/api/$1" }
-    ],
-    "functions": {
-      "api/api.js": {
-        "memory": 1024,
-        "maxDuration": 10
-      }
-    },
-    "env": {
-      "API_KEY": "AIzaSyBc1V0aD1WeeRfFtcC8stNPFvxMYL7P4O8"
+  "version": 2,
+  "builds" : [
+    {
+      "src": "./api/api.js",
+      "use": "@now/node"
     }
-  }
-  
+  ],
+  "routes":[
+    {
+      "src":"/(.*)",
+      "dest": "/api/api.js"
+    }
+  ]
+}
