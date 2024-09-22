@@ -24,8 +24,18 @@ function parseRequestBody(req) {
 // Função para lidar com a rota /gerarPergunta
 async function gerarPerguntaHandler(req, res, body) {
     const { dificuldade, tema, quantidade } = body;
-    const numPerguntas = Math.min(Math.max(parseInt(quantidade, 10), 1), 10);
 
+    // Verifique se o request é iterável e converta para um array, se necessário
+    let requestArray;
+    try {
+        requestArray = Array.isArray(req) ? req : Array.from([req]); // Certifique-se de que é um array
+    } catch (error) {
+        console.error('Erro ao converter request para array:', error);
+        res.status(500).json({ error: 'Erro ao processar a requisição', details: error.message });
+        return;
+    }
+
+    const numPerguntas = Math.min(Math.max(parseInt(quantidade, 10), 1), 10);
     const perguntasGeradas = [];
 
     for (let i = 0; i < numPerguntas; i++) {
