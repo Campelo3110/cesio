@@ -104,7 +104,7 @@ document.getElementById('gerarPergunta').addEventListener('click', async functio
     mostrarCarregando(); // Mostra a mensagem de carregamento
 
     try {
-        const response = await fetch('https://cesio.vercel.app/api/gerarPergunta', {
+        const response = await fetch('https://cesio.vercel.app/api/gerarPergunta.js', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
