@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios Inteligentes</title>
+    <link rel="stylesheet" href="css/exercicios.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="#">Césio</a>
+        </div>
+        <nav>
+            <a href="index.html">Página inicial</a>
+            <a href="casos3.html">Casos</a>
+            <a href="indicacoes1.html">Indicações</a>
+            <a href="cacapalavra2.html">Caça palavras</a>
+            <a href="curiosidades4.html">Curiosidades</a>
+        </nav>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+    </header>
+    
+    <main>
+        <h1>Gerador de Exercícios Inteligentes</h1>
+
+        <section>
+            <label for="difficulty">Escolha a dificuldade:</label>
+            <select id="difficulty">
+                <option value="facil">Fácil</option>
+                <option value="medio">Médio</option>
+                <option value="dificil">Difícil</option>
+            </select>
+
+            <label for="tema">Escolha o tema:</label>
+            <select id="tema">
+                <option value="cesio">Césio-137</option>
+                <option value="radiacao">Radiação</option>
+                <option value="fisica_geral">Física Geral</option>
+            </select>
+
+            <label for="quantidadePerguntas">Quantidade de perguntas (máximo 10):</label>
+            <input type="number" id="quantidadePerguntas" min="1" max="10" value="1">
+
+            <button id="gerarPergunta">Gerar Pergunta</button>
+        </section>
+
+        <div id="perguntasContainer"></div>
+    </main>
+
+    <!-- Inclua os arquivos JS -->
+    <script src="js/dom.js"></script>
+</body>
+</html>

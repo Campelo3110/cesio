@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to bottom, #002f4b, rgba(43, 47, 119, 0));
+    padding: 20px;
+    padding-right: 50px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo a {
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+}
+
+header nav {
+    display: flex;
+    gap: 20px;
+}
+
+header nav a {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #2e373f;
+}
+
+.hamburger {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+body {
+    background-color: #f0f4f8;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin-top: 60px;
+    color: #003366;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#word-search {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 15px;
+    border: 2px solid #003366;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#word-list {
+    margin-top: 30px;
+}
+
+#word-list ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#word-list li {
+    font-size: 1.2em;
+    color: #222;
+    padding: 10px;
+    background-color: #e0e7ff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, text-decoration 0.3s ease;
+}
+
+#word-list li:hover {
+    background-color: #c3dafe;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); 
+    grid-gap: 5px;
+    margin-top: 20px;
+    justify-content: center; 
+}
+
+
+/* .grid div {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    text-align: center;
+    line-height: 40px;
+    font-size: 1.5em;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.2s;
+} */
+
+.grid div {
+    background-color: #f0f0f0;
+    text-align: center;
+    line-height: 1.5; 
+    font-size: 2vw; 
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.2s;
+    display: flex; /* Alinha o conteúdo centralizado */
+    align-items: center; /* Alinhamento vertical */
+    justify-content: center; /* Alinhamento horizontal */
+}
+
+
+.grid div.selected {
+    background-color: yellow;
+    transform: scale(1.1);
+}
+
+.grid div.found {
+    background-color: #28a745;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+        margin-top: 10px;
+    }
+
+    #word-search {
+        width: 100%;
+    }
+
+    .grid {
+        /* grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); */
+    }
+
+    .grid div {
+        /* Remover o tamanho fixo para permitir adaptação */
+        height: auto; 
+    }
+
+    header {
+        padding: 10px;
+    }
+
+    header nav {
+        display: none; /* Esconde o menu de navegação por padrão em telas pequenas */
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: rgba(0, 47, 75, 0.9);
+        width: 100%;
+        text-align: right;
+    }
+
+    header nav a {
+        padding: 10px 20px;
+        font-size: 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hamburger {
+        display: block; /* Exibe o menu de hambúrguer */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+        margin-top: 150px;
+    }
+
+    #word-search {
+        width: 100%;
+    }
+
+    .grid {
+        grid-template-columns: repeat(12, 1fr); /* Garante 12 colunas sempre */
+    }
+
+    .grid div {
+        font-size: 4vw; /* Aumenta a fonte proporcionalmente */
+        height: auto; /* Permite que a altura se ajuste automaticamente */
+    }
+
+
+    #word-list ul {
+        flex-direction: column;
+    }
+}
+
+nav.active {
+    display: flex; /* Mostra o menu quando clicado */
+}
