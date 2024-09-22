@@ -43,7 +43,7 @@ async function gerarPerguntaHandler(req, res, body) {
 
         try {
             const model = await genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-            const result = await model.generateMessage({
+            const result = await model.generateContent({
                 prompt: promptText,
             });
 
