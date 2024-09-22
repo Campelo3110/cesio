@@ -42,11 +42,13 @@ async function gerarPerguntaHandler(req, res, body) {
         }`;
 
         try {
-            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-            const result = await model.generateContent(promptText);
+            const model = await genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+            const result = await model.generateMessage({
+                prompt: promptText,
+            });
 
             // Verifique se a resposta contém texto
-            const text = result?.response?.text || '';
+            const text = result?.message?.content || '';
 
             // Certifique-se de que text é uma string antes de verificar seu conteúdo
             if (typeof text === 'string' && (text.startsWith('{') || text.startsWith('['))) {
