@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'; // Import em vez de require
 
-// Usar a variável de ambiente para a chave da API (continua no código conforme solicitado)
+// Usar a chave da API diretamente no código conforme solicitado
 const apiKey = "AIzaSyBc1V0aD1WeeRfFtcC8stNPFvxMYL7P4O8";
 const genAI = new GoogleGenerativeAI(apiKey);
 
@@ -45,31 +45,26 @@ async function gerarPerguntaHandler(req, res, body) {
             const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
             const result = await model.generateContent(promptText);
 
-            // Verifique se a resposta está no formato esperado
-            if (result && result.response && result.response.text) {
-                const text = result.response.text;
+            // Verifique se a resposta contém texto
+            const text = result?.response?.text || '';
 
-                // Verifique se a resposta parece ser JSON
-                if (text.startsWith('{') || text.startsWith('[')) {
-                    try {
-                        const resultadoJSON = JSON.parse(text);
-                        perguntasGeradas.push({
-                            pergunta: resultadoJSON.question,
-                            alternativas: resultadoJSON.answers,
-                            explicacao: resultadoJSON.explicacao
-                        });
-                    } catch (jsonError) {
-                        console.error('Erro ao parsear JSON retornado:', jsonError);
-                        res.status(500).json({ error: 'Erro ao processar o JSON da API', details: jsonError.message });
-                        return;
-                    }
-                } else {
-                    console.error('Resposta da API não está no formato JSON:', text);
-                    res.status(500).json({ error: 'Resposta da API não está no formato JSON' });
+            // Certifique-se de que text é uma string antes de verificar seu conteúdo
+            if (typeof text === 'string' && (text.startsWith('{') || text.startsWith('['))) {
+                try {
+                    const resultadoJSON = JSON.parse(text);
+                    perguntasGeradas.push({
+                        pergunta: resultadoJSON.question,
+                        alternativas: resultadoJSON.answers,
+                        explicacao: resultadoJSON.explicacao
+                    });
+                } catch (jsonError) {
+                    console.error('Erro ao parsear JSON retornado:', jsonError);
+                    res.status(500).json({ error: 'Erro ao processar o JSON da API', details: jsonError.message });
                     return;
                 }
             } else {
-                res.status(500).json({ error: 'Resposta da API inválida' });
+                console.error('Resposta da API não está no formato JSON:', text);
+                res.status(500).json({ error: 'Resposta da API não está no formato JSON' });
                 return;
             }
         } catch (error) {
