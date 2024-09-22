@@ -77,7 +77,7 @@ export default async function handler(req, res) {
         return;
     }
 
-    if (req.method === 'POST' && req.url === '/api/gerarPergunta.js') {
+    if (req.method === 'POST' && req.url === '/api/gerarPergunta') {
         try {
             const body = await parseRequestBody(req);
             await gerarPerguntaHandler(req, res, body);

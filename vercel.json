@@ -3,7 +3,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/gerarPergunta.js"
+      "dest": "/api/api.js"
     }
   ]
 }
