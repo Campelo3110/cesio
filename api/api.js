@@ -64,6 +64,7 @@ async function gerarPerguntaHandler(req, res, body) {
                 }
             } else {
                 console.error('Resposta da API não está no formato JSON:', text);
+                console.error(result)
                 res.status(500).json({ error: 'Resposta da API não está no formato JSON' });
                 return;
             }
