@@ -78,7 +78,7 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    if (req.method === 'POST' && req.url === '/gerarPergunta') {
+    if (req.method === 'POST' && req.url === '/api/gerarPergunta') {
         parseRequestBody(req, body => {
             gerarPerguntaHandler(req, res, body);
         });
