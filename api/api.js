@@ -1,3 +1,26 @@
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+// Chave da API (é recomendado usar variáveis de ambiente em produção)
+const apiKey = process.env.GOOGLE_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
+
+// Função para manipular o corpo da requisição
+function parseRequestBody(req) {
+    return new Promise((resolve, reject) => {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            try {
+                resolve(JSON.parse(body));
+            } catch (error) {
+                reject(error);
+            }
+        });
+    });
+}
+
 // Função para lidar com a rota /gerarPergunta
 async function gerarPerguntaHandler(req, res, body) {
     const { dificuldade, tema, quantidade } = body;
@@ -18,16 +41,14 @@ async function gerarPerguntaHandler(req, res, body) {
         }`;
 
         try {
-            // Acessa o modelo generativo
             const model = await genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
             const result = await model.generateContent(promptText);
 
-            console.log('Resultado da API:', JSON.stringify(result, null, 2)); // Exibe a resposta completa para inspeção
+            console.log('Resultado da API:', JSON.stringify(result, null, 2));
 
             const candidates = result?.response?.candidates;
             if (candidates && candidates.length > 0) {
-                // Verifique se o conteúdo desejado está em 'output'
-                const text = candidates[0]?.output || candidates[0]?.text || ''; // Verifica as possíveis chaves que contêm a resposta
+                const text = candidates[0]?.output || candidates[0]?.text || '';
 
                 if (typeof text === 'string' && text.trim()) {
                     try {
@@ -59,6 +80,30 @@ async function gerarPerguntaHandler(req, res, body) {
         }
     }
 
-    // Enviar todas as perguntas geradas
     res.status(200).json(perguntasGeradas);
+}
+
+// Função principal de tratamento de requisições
+export default async function handler(req, res) {
+    if (req.method === 'OPTIONS') {
+        res.status(204)
+            .setHeader('Access-Control-Allow-Origin', '*')
+            .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+            .setHeader('Access-Control-Allow-Headers', 'Content-Type')
+            .end();
+        return;
+    }
+
+    if (req.method === 'POST' && req.url === '/api/gerarPergunta') {
+        try {
+            const body = await parseRequestBody(req);
+            await gerarPerguntaHandler(req, res, body);
+        } catch (error) {
+            res.status(400).json({ error: 'Erro ao processar o corpo da requisição' });
+        }
+    } else if (req.method === 'GET') {
+        res.status(200).send('Servidor está funcionando');
+    } else {
+        res.status(404).send('Rota não encontrada');
+    }
 }
