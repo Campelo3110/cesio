@@ -42,24 +42,35 @@ async function gerarPerguntaHandler(req, res, body) {
         }`;
 
         try {
-            // Use o modelo correto
             const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
             const result = await model.generateContent(promptText);
-            const text = result.response.text;
-
-            // Parsear a resposta JSON retornada pela API do Google
-            const resultadoJSON = JSON.parse(text);
-
-            perguntasGeradas.push({
-                pergunta: resultadoJSON.question,
-                alternativas: resultadoJSON.answers,
-                explicacao: resultadoJSON.explicacao
-            });
+        
+            // Verifique se a resposta está no formato correto
+            if (result && result.response && result.response.text) {
+                const text = result.response.text;
+                
+                try {
+                    const resultadoJSON = JSON.parse(text);
+                    perguntasGeradas.push({
+                        pergunta: resultadoJSON.question,
+                        alternativas: resultadoJSON.answers,
+                        explicacao: resultadoJSON.explicacao
+                    });
+                } catch (jsonError) {
+                    console.error('Erro ao parsear JSON retornado:', jsonError);
+                    res.status(500).json({ error: 'Erro ao processar o JSON da API', details: jsonError.message });
+                    return;
+                }
+            } else {
+                res.status(500).json({ error: 'Resposta da API inválida' });
+                return;
+            }
         } catch (error) {
             console.error('Erro ao gerar pergunta:', error);
             res.status(500).json({ error: 'Erro no servidor', details: error.message });
             return;
         }
+        
     }
 
     // Enviar todas as perguntas geradas
