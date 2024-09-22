@@ -29,7 +29,7 @@ async function gerarPerguntaHandler(req, res, body) {
     const perguntasGeradas = [];
 
     for (let i = 0; i < numPerguntas; i++) {
-        const promptText = `Gere uma pergunta sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura:
+        const promptText = `Gere uma pergunta sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura (não é necessário especificar que o arquivo está em JSON):
         {
           "question": "Pergunta",
           "answers": [
