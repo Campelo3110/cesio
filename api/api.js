@@ -47,10 +47,14 @@ async function gerarPerguntaHandler(req, res, body) {
                 prompt: promptText
             });
 
+            console.log('Resultado da API:', result); // Log da resposta completa
+
             // Verifique se a resposta contém texto
             const candidates = result?.response?.candidates;
             if (candidates && candidates.length > 0) {
                 const text = candidates[0]?.output || '';
+
+                console.log('Texto da resposta:', text); 
 
                 // Certifique-se de que text é uma string antes de verificar seu conteúdo
                 if (typeof text === 'string' && text.trim()) {
