@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "name": "cesio",
+    "rewrites": [
+      { "source": "/api/(.*)", "destination": "/api/$1" }
+    ],
+    "functions": {
+      "api/*.js": {
+        "memory": 1024,
+        "maxDuration": 10
+      }
+    },
+    "env": {
+      "API_KEY": "AIzaSyBc1V0aD1WeeRfFtcC8stNPFvxMYL7P4O8"
+    }
+  }
+  
