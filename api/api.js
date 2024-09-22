@@ -42,10 +42,10 @@ async function gerarPerguntaHandler(req, res, body) {
         }`;
 
         try {
-            // O input precisa ser um array de strings
+            // Corrigido para passar o prompt no formato de objeto
             const model = await genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
             const result = await model.generateContent({
-                input: [promptText] // Corrigido para ser um array de strings
+                prompt: promptText // Passar como objeto com a propriedade prompt
             });
 
             // Verifique se a resposta contém texto
