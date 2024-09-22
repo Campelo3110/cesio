@@ -1,6 +1,7 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+import { GoogleGenerativeAI } from '@google/generative-ai'; // Import em vez de require
 
-const apiKey = "AIzaSyBc1V0aD1WeeRfFtcC8stNPFvxMYL7P4O8";  // Melhor armazenar em variável de ambiente
+// Usar a variável de ambiente para a chave da API
+const apiKey = "AIzaSyBc1V0aD1WeeRfFtcC8stNPFvxMYL7P4O8";
 const genAI = new GoogleGenerativeAI(apiKey);
 
 // Função para manipular o corpo da requisição
@@ -41,10 +42,12 @@ async function gerarPerguntaHandler(req, res, body) {
         }`;
 
         try {
+            // Use o modelo correto
             const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
             const result = await model.generateContent(promptText);
-            const text = result.response.text;  // Verificando a estrutura correta da resposta
+            const text = result.response.text;
 
+            // Parsear a resposta JSON retornada pela API do Google
             const resultadoJSON = JSON.parse(text);
 
             perguntasGeradas.push({
@@ -63,10 +66,11 @@ async function gerarPerguntaHandler(req, res, body) {
     res.status(200).json(perguntasGeradas);
 }
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
     // Tratando preflight requests (solicitações OPTIONS)
     if (req.method === 'OPTIONS') {
-        res.status(204).setHeader('Access-Control-Allow-Origin', '*')
+        res.status(204)
+            .setHeader('Access-Control-Allow-Origin', '*')
             .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
             .setHeader('Access-Control-Allow-Headers', 'Content-Type')
             .end();
@@ -85,4 +89,4 @@ module.exports = async (req, res) => {
     } else {
         res.status(404).send('Rota não encontrada');
     }
-};
+}
