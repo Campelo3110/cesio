@@ -53,7 +53,7 @@ async function gerarPerguntaHandler(req, res, body) {
                 const text = candidates[0]?.output || '';
 
                 // Certifique-se de que text é uma string antes de verificar seu conteúdo
-                if (typeof text === 'string' && (text.startsWith('{') || text.startsWith('['))) {
+                if (typeof text === 'string' && text.trim()) {
                     try {
                         const resultadoJSON = JSON.parse(text);
                         perguntasGeradas.push({
@@ -62,7 +62,7 @@ async function gerarPerguntaHandler(req, res, body) {
                             explicacao: resultadoJSON.explicacao
                         });
                     } catch (jsonError) {
-                        console.error('Erro ao parsear JSON retornado:', jsonError);
+                        console.error('Erro ao parsear JSON retornado:', jsonError, 'Resposta:', text);
                         res.status(500).json({ error: 'Erro ao processar o JSON da API', details: jsonError.message });
                         return;
                     }
@@ -77,7 +77,7 @@ async function gerarPerguntaHandler(req, res, body) {
                 return;
             }
         } catch (error) {
-            console.error('Erro ao gerar pergunta:', error);
+            console.error('Erro ao gerar pergunta:', error, 'Prompt:', promptText);
             res.status(500).json({ error: 'Erro no servidor', details: error.message });
             return;
         }
