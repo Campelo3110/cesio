@@ -29,7 +29,7 @@ async function gerarPerguntaHandler(req, res, body) {
     const perguntasGeradas = [];
 
     for (let i = 0; i < numPerguntas; i++) {
-        const promptText = `Gere uma pergunta sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura (não é necessário especificar que o arquivo está em JSON):
+        const promptText = `Gere uma pergunta sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura:
         {
           "question": "Pergunta",
           "answers": [
@@ -42,30 +42,38 @@ async function gerarPerguntaHandler(req, res, body) {
         }`;
 
         try {
-            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-            const result = await model.generateContent(promptText);
+            const model = await genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+            const result = await model.generateContent({
+                prompt: promptText
+            });
 
             // Verifique se a resposta contém texto
-            const text = result?.response?.text || '';
+            const candidates = result?.response?.candidates;
+            if (candidates && candidates.length > 0) {
+                const text = candidates[0]?.output || '';
 
-            // Certifique-se de que text é uma string antes de verificar seu conteúdo
-            if (typeof text === 'string' && (text.startsWith('{') || text.startsWith('['))) {
-                try {
-                    const resultadoJSON = JSON.parse(text);
-                    perguntasGeradas.push({
-                        pergunta: resultadoJSON.question,
-                        alternativas: resultadoJSON.answers,
-                        explicacao: resultadoJSON.explicacao
-                    });
-                } catch (jsonError) {
-                    console.error('Erro ao parsear JSON retornado:', jsonError);
-                    res.status(500).json({ error: 'Erro ao processar o JSON da API', details: jsonError.message });
+                // Certifique-se de que text é uma string antes de verificar seu conteúdo
+                if (typeof text === 'string' && (text.startsWith('{') || text.startsWith('['))) {
+                    try {
+                        const resultadoJSON = JSON.parse(text);
+                        perguntasGeradas.push({
+                            pergunta: resultadoJSON.question,
+                            alternativas: resultadoJSON.answers,
+                            explicacao: resultadoJSON.explicacao
+                        });
+                    } catch (jsonError) {
+                        console.error('Erro ao parsear JSON retornado:', jsonError);
+                        res.status(500).json({ error: 'Erro ao processar o JSON da API', details: jsonError.message });
+                        return;
+                    }
+                } else {
+                    console.error('Resposta da API não está no formato JSON:', text);
+                    res.status(500).json({ error: 'Resposta da API não está no formato JSON' });
                     return;
                 }
             } else {
-                console.error('Resposta da API não está no formato JSON:', text);
-                console.error(result)
-                res.status(500).json({ error: 'Resposta da API não está no formato JSON' });
+                console.error('Nenhum candidato encontrado na resposta da API.');
+                res.status(500).json({ error: 'Nenhuma resposta válida foi encontrada.' });
                 return;
             }
         } catch (error) {
