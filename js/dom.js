@@ -1,3 +1,4 @@
+// Função para lidar com o menu
 function toggleMenu() {
     const nav = document.querySelector('nav');
     nav.classList.toggle('active');
@@ -9,7 +10,7 @@ function mostrarCarregando() {
     container.innerHTML = ''; // Limpa qualquer conteúdo anterior
     const carregandoDiv = document.createElement('div');
     carregandoDiv.id = 'carregando';
-    carregandoDiv.innerHTML = '<p>Gerando pergunta...</p>';
+    carregandoDiv.innerHTML = '<p>Gerando pergunta(s)...</p>';
     carregandoDiv.style.textAlign = 'center';
     carregandoDiv.style.fontSize = '18px';
     carregandoDiv.style.padding = '20px';
@@ -24,6 +25,9 @@ function removerCarregando() {
         carregandoDiv.remove();
     }
 }
+
+// Variável global para armazenar perguntas geradas
+const perguntasExistentes = new Set(); // Usamos um Set para verificar duplicatas
 
 // Função para atualizar o HTML com as perguntas e alternativas
 function atualizarInterface(pergunta, alternativas, explicacao, index) {
@@ -123,14 +127,20 @@ document.getElementById('gerarPergunta').addEventListener('click', async functio
 
         if (Array.isArray(resultado)) {
             perguntasGeradas = resultado.map((perguntaData, index) => {
-                atualizarInterface(perguntaData.pergunta, perguntaData.alternativas, perguntaData.explicacao, index);
-                return {
-                    pergunta: perguntaData.pergunta,
-                    alternativas: perguntaData.alternativas,
-                    explicacao: perguntaData.explicacao,
-                    alternativaSelecionada: null,
-                };
-            });
+                // Verifica se a pergunta já foi exibida
+                if (!perguntasExistentes.has(perguntaData.pergunta)) {
+                    perguntasExistentes.add(perguntaData.pergunta); // Armazena a pergunta para evitar repetição
+                    atualizarInterface(perguntaData.pergunta, perguntaData.alternativas, perguntaData.explicacao, index);
+                    return {
+                        pergunta: perguntaData.pergunta,
+                        alternativas: perguntaData.alternativas,
+                        explicacao: perguntaData.explicacao,
+                        alternativaSelecionada: null,
+                    };
+                } else {
+                    console.log('Pergunta repetida ignorada:', perguntaData.pergunta);
+                }
+            }).filter(Boolean); // Remove valores "undefined" no caso de perguntas repetidas
         }
     } catch (error) {
         removerCarregando(); // Remove a mensagem de carregamento em caso de erro
