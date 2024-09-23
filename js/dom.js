@@ -103,6 +103,7 @@ function atualizarInterface(pergunta, alternativas, explicacao, index) {
 document.getElementById('gerarPergunta').addEventListener('click', async function () {
     const dificuldade = document.getElementById('difficulty').value;
     const tema = document.getElementById('tema').value;
+    const local = document.getElementById('local').value;
     const quantidade = document.getElementById('quantidadePerguntas').value;
 
     mostrarCarregando(); // Mostra a mensagem de carregamento
@@ -113,7 +114,7 @@ document.getElementById('gerarPergunta').addEventListener('click', async functio
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ dificuldade, tema, quantidade })
+            body: JSON.stringify({ dificuldade, tema, quantidade, local })
         });
 
         if (!response.ok) throw new Error('Erro na requisição');

@@ -23,14 +23,13 @@ function parseRequestBody(req) {
 
 // Função para lidar com a rota /gerarPergunta
 async function gerarPerguntaHandler(req, res, body) {
-    const { dificuldade, tema, quantidade } = body;
-    const numPerguntas = Math.min(Math.max(parseInt(quantidade, 10), 1), 10);
+    const { dificuldade, tema, quantidade, local } = body;
+    const numPerguntas = Math.min(Math.max(parseInt(quantidade, 5), 1), 5);
     const perguntasGeradas = [];
     const perguntasExistentes = new Set();
     
     for (let i = 0; i < numPerguntas; i++) {
-        const promptText = `Pegue perguntas de vestibular/enem(sem ser repetidas), indicando no começo da pergunta de qual vestibular ela é sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura (não é necessário especificar que o arquivo está em JSON):
-        (não é necessário especificar que o arquivo está em JSON)
+        const promptText = `Pegue perguntas do ${local}, sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura (não é necessário especificar que o arquivo está em JSON):
         {
           "question": "Pergunta",
           "answers": [
