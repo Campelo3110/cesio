@@ -30,7 +30,7 @@ function removerCarregando() {
 const perguntasExistentes = new Set(); // Usamos um Set para verificar duplicatas
 
 // Função para atualizar o HTML com as perguntas e alternativas
-function atualizarInterface(pergunta, alternativas, explicacao, index) {
+function atualizarInterface(pergunta, alternativas, explicacao, index, vestibular) {
     const container = document.getElementById('perguntasContainer');
 
     const divPergunta = document.createElement('div');
@@ -41,7 +41,7 @@ function atualizarInterface(pergunta, alternativas, explicacao, index) {
     }, 100); // Pequeno delay para a animação iniciar
 
     const perguntaElem = document.createElement('h2');
-    perguntaElem.innerText = `Pergunta ${index + 1}: ${pergunta}`;
+    perguntaElem.innerText = `${vestibular}: ${pergunta}`;
     divPergunta.appendChild(perguntaElem);
 
     const ulAlternativas = document.createElement('ul');
@@ -103,7 +103,7 @@ function atualizarInterface(pergunta, alternativas, explicacao, index) {
 document.getElementById('gerarPergunta').addEventListener('click', async function () {
     const dificuldade = document.getElementById('difficulty').value;
     const tema = document.getElementById('tema').value;
-    const local = document.getElementById('local').value;
+    const vestibular = document.getElementById('vestibular').value;
     const quantidade = document.getElementById('quantidadePerguntas').value;
 
     mostrarCarregando(); // Mostra a mensagem de carregamento
@@ -114,7 +114,7 @@ document.getElementById('gerarPergunta').addEventListener('click', async functio
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ dificuldade, tema, quantidade, local })
+            body: JSON.stringify({ dificuldade, tema, quantidade, vestibular })
         });
 
         if (!response.ok) throw new Error('Erro na requisição');
