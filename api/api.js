@@ -22,82 +22,69 @@ function parseRequestBody(req) {
 }
 
 // Função para lidar com a rota /gerarPergunta
-// Função para lidar com a rota /gerarPergunta
 async function gerarPerguntaHandler(req, res, body) {
     const { dificuldade, tema, quantidade } = body;
     const numPerguntas = Math.min(Math.max(parseInt(quantidade, 10), 1), 10);
     const perguntasGeradas = [];
-    const perguntasExistentes = new Set(); // Set para verificar duplicatas
-
+    const perguntasExistentes = new Set();
+    
     for (let i = 0; i < numPerguntas; i++) {
-        let perguntaValida = false;
-        let tentativa = 0;
+        const promptText = `Gere uma pergunta(sem ser repetidas) sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura (não é necessário especificar que o arquivo está em JSON):
+        {
+          "question": "Pergunta",
+          "answers": [
+            { "Text": "alternativa 1", "correct": "boolean" },
+            { "Text": "alternativa 2", "correct": "boolean" },
+            { "Text": "alternativa 3", "correct": "boolean" },
+            { "Text": "alternativa 4", "correct": "boolean" }
+          ],
+          "explicacao": "Explicação da resposta correta"
+        }`;
 
-        while (!perguntaValida && tentativa < 10) { // Limita a 10 tentativas para evitar loops longos
-            tentativa++;
+        try {
+            const model = await genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+            const result = await model.generateContent(promptText);
 
-            const promptText = `
-                Gere uma pergunta sobre o tema ${tema} com dificuldade ${dificuldade}, 4 alternativas de resposta, 
-                e uma explicação da correta. Retorne no formato JSON com a seguinte estrutura(não é necessário especificar que o arquivo está em JSON):
-                {
-                    "question": "Pergunta",
-                    "answers": [
-                        { "Text": "alternativa 1", "correct": "boolean" },
-                        { "Text": "alternativa 2", "correct": "boolean" },
-                        { "Text": "alternativa 3", "correct": "boolean" },
-                        { "Text": "alternativa 4", "correct": "boolean" }
-                    ],
-                    "explicacao": "Explicação da resposta correta"
-                }
-            `;
+            console.log('Resultado da API:', JSON.stringify(result, null, 2));
 
-            try {
-                // Acessa o modelo generativo
-                const model = await genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-                const result = await model.generateContent(promptText);
-                const candidates = result?.response?.candidates;
+            const candidates = result?.response?.candidates;
+            if (candidates && candidates.length > 0) {
+                // Acesse o conteúdo correto dentro da estrutura da resposta
+                const text = candidates[0]?.content?.parts[0]?.text || '';
 
-                if (candidates && candidates.length > 0) {
-                    const text = candidates[0]?.output || candidates[0]?.text || '';
-
-                    if (typeof text === 'string' && text.trim()) {
-                        const resultadoJSON = JSON.parse(text);
-
-                        // Verifica se a pergunta já foi gerada antes
-                        if (!perguntasExistentes.has(resultadoJSON.question)) {
-                            perguntasExistentes.add(resultadoJSON.question); // Armazena a pergunta única
-                            perguntasGeradas.push({
-                                pergunta: resultadoJSON.question,
-                                alternativas: resultadoJSON.answers,
-                                explicacao: resultadoJSON.explicacao
-                            });
-                            perguntaValida = true; // Sai do loop de tentativa
-                        } else {
-                            console.log('Pergunta repetida, tentando gerar outra...');
-                        }
-                    } else {
-                        console.error('Resposta da API não está no formato esperado:', text);
+                if (typeof text === 'string' && text.trim()) {
+                    try {
+                        const resultadoJSON = JSON.parse(text); // Agora o JSON correto está aqui
+                        perguntasGeradas.push({
+                            pergunta: resultadoJSON.question,
+                            alternativas: resultadoJSON.answers,
+                            explicacao: resultadoJSON.explicacao
+                        });
+                    } catch (jsonError) {
+                        console.error('Erro ao parsear JSON retornado:', jsonError, 'Resposta:', text);
+                        res.status(500).json({ error: 'Erro ao processar o JSON da API', details: jsonError.message });
+                        return;
                     }
                 } else {
-                    console.error('Nenhum candidato válido encontrado.');
+                    console.error('Resposta da API não está no formato JSON:', text);
+                    res.status(500).json({ error: 'Resposta da API não está no formato JSON' });
+                    return;
                 }
-            } catch (error) {
-                console.error('Erro ao gerar pergunta:', error.message);
-                res.status(500).json({ error: 'Erro no servidor', details: error.message });
+            } else {
+                console.error('Nenhum candidato encontrado na resposta da API.');
+                res.status(500).json({ error: 'Nenhuma resposta válida foi encontrada.' });
                 return;
             }
+        } catch (error) {
+            console.error('Erro ao gerar pergunta:', error, 'Prompt:', promptText);
+            res.status(500).json({ error: 'Erro no servidor', details: error.message });
+            return;
         }
     }
 
-    // Se o número de perguntas geradas for o esperado, responde com sucesso
-    if (perguntasGeradas.length === numPerguntas) {
-        res.status(200).json(perguntasGeradas);
-    } else {
-        res.status(500).json({ error: 'Não foi possível gerar perguntas únicas suficientes' });
-    }
+    // Enviar todas as perguntas geradas
+    res.status(200).json(perguntasGeradas);
 }
-
-
 
 
 // Função principal de tratamento de requisições
