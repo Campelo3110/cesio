@@ -146,6 +146,19 @@ header nav a:hover {
     transform: scale(1.05);
 }
 
+footer{
+    background-color: #333;
+    color: #fff;
+}
+
+.footer{
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
 /* Responsividade */
 @media screen and (min-width: 768px) {
     .text1, .text2, .text3, .text4 {
