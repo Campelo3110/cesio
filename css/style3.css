@@ -44,7 +44,20 @@ header nav a {
 header nav a:hover {
     color: #2e373f;
 }
+.section {
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
 
+.lado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
 .hamburger {
     padding-right: 20px;
     display: none;
@@ -90,4 +103,142 @@ main {
 
 nav.active {
     display: flex; /* Mostra o menu quando clicado */
+}
+h1 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700px;
+    font-style: italic;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .apresentacao{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ }
+ 
+ .apresentacao h1{
+     padding: 0 20px;
+  }
+  .apresentacao h1{
+    text-align: center;
+    font-size: 40px;
+    margin: 50px;
+    font-weight: 700px;
+  }
+  .apresentacao1 p{
+    text-indent: 2em;
+    align-items: center;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+  .abacate h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+  }
+  .abacate img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  .abacate img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.abacate1 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.banana h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+}
+.banana img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.banana img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.banana2 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+.caqui h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+}
+.caqui img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.caqui img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.caqui1 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.damasco h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+}
+.damasco img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.damasco img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.damasco2 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
 }
