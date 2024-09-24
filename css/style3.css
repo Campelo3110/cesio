@@ -146,14 +146,6 @@ header nav a:hover {
 }
 
 @media screen and (max-width: 480px) {
-    header nav a {
-        font-size: 16px;
-    }
-
-    .hamburger {
-        font-size: 25px;
-    }
-
     .apresentacao h1 {
         font-size: 24px;
     }
@@ -161,4 +153,8 @@ header nav a:hover {
     .section p {
         font-size: 16px;
     }
+}
+
+nav.active {
+    display: flex; /* Mostra o menu quando clicado */
 }
