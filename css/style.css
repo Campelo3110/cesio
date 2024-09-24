@@ -146,10 +146,15 @@ header nav a:hover {
     transform: scale(1.05);
 }
 
-footer{
+/* footer{
     background-color: #333;
     color: #fff;
     padding: 50px;
+}
+
+footer, ul{
+    list-style: none;
+
 }
 
 .footer{
@@ -158,6 +163,10 @@ footer{
     align-items: center;
     justify-content: space-between;
 }
+
+.coluna1, img{
+    filter: invert(100%);
+} */
 
 
 /* Responsividade */
