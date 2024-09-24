@@ -118,6 +118,9 @@ iframe:hover, img:hover {
     p {
         width: 60%; /* Altera a largura do texto em telas maiores */
     }
+}
+
+@media screen and (max-width: 768px) {
 
     header {
         padding: 10px;
