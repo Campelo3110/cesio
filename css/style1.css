@@ -87,7 +87,9 @@ h2 {
     margin-bottom: 15px;
     color: #002f4b;
 }
-
+.bergamota, p{
+    text-align: center;
+}
 p {
     font-size: 18px;
     line-height: 1.8;
@@ -146,4 +148,8 @@ iframe:hover, img:hover {
     .hamburger {
         display: block; /* Exibe o menu de hambúrguer */
     }
+}
+
+nav.active {
+    display: flex; /* Mostra o menu quando clicado */
 }
