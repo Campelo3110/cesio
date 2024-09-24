@@ -87,14 +87,18 @@ h2 {
     margin-bottom: 15px;
     color: #002f4b;
 }
-.bergamota, p{
+
+.bergamota, p {
     text-align: center;
+    justify-items: center;
+
 }
-p {
+
+main, p {
     font-size: 18px;
     line-height: 1.8;
     margin-top: 15px;
-    width: 90%; /* Alterado para ser mais responsivo */
+    width: 90%; 
     text-align: center;
 }
 
@@ -115,10 +119,6 @@ iframe:hover, img:hover {
     .lado {
         flex-direction: row; /* Muda para linha em telas maiores */
         justify-content: space-between; /* Espaço entre os elementos */
-    }
-
-    p {
-        width: 60%; /* Altera a largura do texto em telas maiores */
     }
 }
 
