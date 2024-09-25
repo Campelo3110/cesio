@@ -70,13 +70,6 @@ header nav a:hover {
     padding: 20px;
 }
 
-.abacate{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
 .apresentacao h1 {
     text-align: center;
     font-size: 40px;
