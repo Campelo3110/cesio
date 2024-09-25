@@ -1,22 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=SUSE:wght@100..800&display=swap');
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    border: 0;
     font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
 }
-
-body {
-    background-color: #f4f4f4;
-}
-
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background: linear-gradient(to bottom, #002f4b, rgba(43, 47, 119, 0));
-    padding: 20px 50px;
+    padding: 20px;
+    padding-right: 50px;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
@@ -54,40 +51,239 @@ header nav a:hover {
     color: white;
 }
 
-.container {
-    padding-top: 100px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+body{
+    background-color: #f4f4f4;
 }
-
-.apresentacao {
-    text-align: center;
-}
-
-.apresentacao h1 {
-    font-size: 40px;
-    margin-bottom: 20px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
+h1 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700px;
     font-style: italic;
-}
-
-.apresentacao1 p {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .apresentacao{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ }
+ 
+ .apresentacao h1{
+     padding: 0 20px;
+  }
+  .apresentacao h1{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+  }
+  .apresentacao1 p{
+    text-indent: 2em;
+    align-items: center;
     font-size: 18px;
     line-height: 1.6;
-    text-align: justify;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+  .abacate h2{
+    text-align: center;
+    font-size: 40px;
     margin: 20px;
+    font-weight: 700px;
+  }
+  .abacate img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  .abacate img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.abacate1 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.banana h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+}
+.banana img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.banana img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.banana2 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-direction: row-reverse;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+.caqui h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+}
+.caqui img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.caqui img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.caqui1 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.damasco h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+}
+.damasco img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.damasco img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.damasco2 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-direction: row-reverse;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+.esfregadinha h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+}
+.esfregadinha img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.esfregadinha img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.esfregadinha1 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.esfregadinha2 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-direction: row-reverse;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+.framboesa h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+}
+.framboesa img{
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.framboesa img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.framboesa1 {
+    text-indent: 2em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-direction: row-reverse;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+.kiwi h2{
+    text-align: center;
+    font-size: 40px;
+    margin: 20px;
+    font-weight: 700px;
+}
+.kiwi p{
+    text-indent: 2em;
+    align-items: center;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
 }
 
-/* Responsividade */
 @media screen and (max-width: 768px) {
+
     header {
-        padding: 10px 20px;
+        padding: 10px;
     }
 
     header nav {
-        display: none;
+        display: none; /* Esconde o menu de navegação por padrão em telas pequenas */
         flex-direction: column;
         position: absolute;
         top: 60px;
@@ -104,32 +300,10 @@ header nav a:hover {
     }
 
     .hamburger {
-        display: block;
-    }
-
-    nav.active {
-        display: flex;
-    }
-
-    .container {
-        padding: 80px 10px;
-    }
-
-    .apresentacao h1 {
-        font-size: 30px;
-    }
-
-    .apresentacao1 p {
-        font-size: 16px;
+        display: block; /* Exibe o menu de hambúrguer */
     }
 }
 
-@media screen and (max-width: 480px) {
-    .apresentacao h1 {
-        font-size: 24px;
-    }
-
-    .apresentacao1 p {
-        font-size: 14px;
-    }
+nav.active {
+    display: flex; /* Mostra o menu quando clicado */
 }
